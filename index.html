@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Projects Portfolio</title>
+    <style>
+        /* ── CSS Reset & Base ──────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-code: #16213e;
+            --accent: #e94560;
+            --accent2: #0f3460;
+            --text: #eaeaea;
+            --text-muted: #a0a0b0;
+            --border: #2a2a4a;
+            --gradient-1: linear-gradient(135deg, #e94560, #0f3460);
+            --gradient-2: linear-gradient(135deg, #0f3460, #533483);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── Navbar ─────────────────────────────────────── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        .navbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .navbar-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .navbar-links a:hover,
+        .navbar-links a.active {
+            color: #fff;
+            background: var(--accent2);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ── Hero Section ──────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(233, 69, 96, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(15, 52, 96, 0.25) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background: var(--gradient-1);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .scroll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        /* ── Section Styles ────────────────────────────── */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title .icon {
+            font-size: 1.6rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .divider {
+            height: 3px;
+            width: 60px;
+            background: var(--gradient-1);
+            border-radius: 3px;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Project Card ──────────────────────────────── */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: var(--accent2);
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tag.highlight {
+            background: var(--accent);
+        }
+
+        /* ── File Tabs ─────────────────────────────────── */
+        .file-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .file-tab {
+            padding: 0.6rem 1.2rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .file-tab:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .file-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: rgba(233, 69, 96, 0.08);
+        }
+
+        /* ── Code Block ────────────────────────────────── */
+        .code-container {
+            position: relative;
+        }
+
+        .code-block {
+            display: none;
+            background: var(--bg-code);
+            padding: 1.5rem;
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .code-block.active {
+            display: block;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: #c9d1d9;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--accent2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+            z-index: 5;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+        }
+
+        /* ── Features Grid ─────────────────────────────── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .feature-item .check {
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        /* ── Footer ────────────────────────────────────── */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ── Scrollbar ─────────────────────────────────── */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+        /* ── Syntax Highlighting ───────────────────────── */
+        .kw { color: #ff79c6; }       /* keywords */
+        .type { color: #8be9fd; }     /* types */
+        .str { color: #f1fa8c; }      /* strings */
+        .cmt { color: #6272a4; font-style: italic; }  /* comments */
+        .num { color: #bd93f9; }      /* numbers */
+        .func { color: #50fa7b; }     /* function names */
+        .prep { color: #ff79c6; }     /* preprocessor */
+        .op { color: #ff79c6; }       /* operators */
+        .inc { color: #f1fa8c; }      /* includes */
+        .ln { color: #444; user-select: none; display: inline-block; min-width: 3em; text-align: right; padding-right: 1.5em; }
+
+        /* ── Back to Top ───────────────────────────────── */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ── Responsive ────────────────────────────────── */
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(15, 15, 26, 0.98);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .navbar-links.open { display: flex; }
+            .hamburger { display: block; }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+
+            .code-block {
+                max-height: 350px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ Navbar ═══════════════════════════════════════════ -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-brand">⟨C++⟩ Projects</div>
+            <button class="hamburger" onclick="document.querySelector('.navbar-links').classList.toggle('open')">☰</button>
+            <ul class="navbar-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+                <li><a href="#guessing-game">Guessing Game</a></li>
+                <li><a href="#tic-tac-toe">Tic Tac Toe</a></li>
+                <li><a href="#contact-manager">Contact Manager</a></li>
+                <li><a href="#hotel-manager">Hotel Manager</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ═══ Hero ═════════════════════════════════════════════ -->
+    <section class="hero" id="home">
+        <div>
+            <h1>C++ Projects Portfolio</h1>
+            <p>A collection of 5 well-structured C++ console applications demonstrating OOP, file I/O, input validation, and clean code architecture.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Source Files</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1200+</div>
+                    <div class="stat-label">Lines of Code</div>
+                </div>
+            </div>
+            <a href="#calculator" class="scroll-btn">↓ Explore Projects</a>
+        </div>
+    </section>
+
+    <!-- ═══ Project 1: Basic Calculator ══════════════════════ -->
+    <section class="section" id="calculator">
+        <div class="divider"></div>
+        <h2 class="section-title"><span class="icon">🧮</span> Basic Calculator</h2>
+        <p class="section-subtitle">A command-line calculator supporting 4 arithmetic operations with input validation.</p>
+
+        <div class="project-card">
+            <div class="card-header">
+                <h2>📄 Source Code</h2>
+                <p>Simple menu-driven calculator with addition, subtraction, multiplication, and division.</p>
+                <div class="tags">
+                    <span class="tag highlight">C++</span>
+                    <span class="tag">Console App</span>
+                    <span class="tag">Input Validation</span>
+                    <span class="tag">Switch-Case</span>
+                </div>
+            </div>
+            <div class="file-tabs">
+                <button class="file-tab active" onclick="showTab(this, 'calc-main')">calculator.cpp</button>
+            </div>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode('calc-main')">📋 Copy</button>
+                <div class="code-block active" id="calc-main"><pre><span class="ln"> 1</span><span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="ln"> 2</span><span class="prep">#include</span> <span class="inc">&lt;limits&gt;</span>
+<span class="ln"> 3</span><span class="kw">using</span> <span class="kw">namespace</span> std;
+<span class="ln"> 4</span>
+<span class="ln"> 5</span><span class="type">void</span> <span class="func">displayMenu</span>() {
+<span class="ln"> 6</span>    cout &lt;&lt; <span class="str">"\n===========================\n"</span>;
+<span class="ln"> 7</span>    cout &lt;&lt; <span class="str">"     Basic Calculator\n"</span>;
+<span class="ln"> 8</span>    cout &lt;&lt; <span class="str">"===========================\n"</span>;
+<span class="ln"> 9</span>    cout &lt;&lt; <span class="str">"  1. Addition       (+)\n"</span>;
+<span class="ln">10</span>    cout &lt;&lt; <span class="str">"  2. Subtraction    (-)\n"</span>;
+<span class="ln">11</span>    cout &lt;&lt; <span class="str">"  3. Multiplication (*)\n"</span>;
+<span class="ln">12</span>    cout &lt;&lt; <span class="str">"  4. Division       (/)\n"</span>;
+<span class="ln">13</span>    cout &lt;&lt; <span class="str">"  5. Exit\n"</span>;
+<span class="ln">14</span>    cout &lt;&lt; <span class="str">"===========================\n"</span>;
+<span class="ln">15</span>    cout &lt;&lt; <span class="str">"  Select an option: "</span>;
+<span class="ln">16</span>}
+<span class="ln">17</span>
+<span class="ln">18</span><span class="type">int</span> <span class="func">main</span>() {
+<span class="ln">19</span>    <span class="type">int</span> choice;
+<span class="ln">20</span>    <span class="type">double</span> num1, num2, result;
+<span class="ln">21</span>
+<span class="ln">22</span>    <span class="kw">do</span> {
+<span class="ln">23</span>        displayMenu();
+<span class="ln">24</span>        cin &gt;&gt; choice;
+<span class="ln">25</span>
+<span class="ln">26</span>        <span class="cmt">// Validate menu input</span>
+<span class="ln">27</span>        <span class="kw">if</span> (cin.fail()) {
+<span class="ln">28</span>            cin.clear();
+<span class="ln">29</span>            cin.ignore(numeric_limits&lt;streamsize&gt;::max(), <span class="str">'\n'</span>);
+<span class="ln">30</span>            cout &lt;&lt; <span class="str">"\n  Invalid input. Please enter a number (1-5).\n"</span>;
+<span class="ln">31</span>            <span class="kw">continue</span>;
+<span class="ln">32</span>        }
+<span class="ln">33</span>
+<span class="ln">34</span>        <span class="kw">if</span> (choice == <span class="num">5</span>) {
+<span class="ln">35</span>            cout &lt;&lt; <span class="str">"\n  Goodbye!\n"</span>;
+<span class="ln">36</span>            <span class="kw">break</span>;
+<span class="ln">37</span>        }
+<span class="ln">38</span>
+<span class="ln">39</span>        <span class="kw">if</span> (choice &lt; <span class="num">1</span> || choice &gt; <span class="num">5</span>) {
+<span class="ln">40</span>            cout &lt;&lt; <span class="str">"\n  Invalid option. Please choose 1-5.\n"</span>;
+<span class="ln">41</span>            <span class="kw">continue</span>;
+<span class="ln">42</span>        }
+<span class="ln">43</span>
+<span class="ln">44</span>        <span class="cmt">// Get operands</span>
+<span class="ln">45</span>        cout &lt;&lt; <span class="str">"\n  Enter first number:  "</span>;
+<span class="ln">46</span>        cin &gt;&gt; num1;
+<span class="ln">47</span>        <span class="kw">if</span> (cin.fail()) {
+<span class="ln">48</span>            cin.clear();
+<span class="ln">49</span>            cin.ignore(numeric_limits&lt;streamsize&gt;::max(), <span class="str">'\n'</span>);
+<span class="ln">50</span>            cout &lt;&lt; <span class="str">"\n  Invalid number.\n"</span>;
+<span class="ln">51</span>            <span class="kw">continue</span>;
+<span class="ln">52</span>        }
+<span class="ln">53</span>
+<span class="ln">54</span>        cout &lt;&lt; <span class="str">"  Enter second number: "</span>;
+<span class="ln">55</span>        cin &gt;&gt; num2;
+<span class="ln">56</span>        <span class="kw">if</span> (cin.fail()) {
+<span class="ln">57</span>            cin.clear();
+<span class="ln">58</span>            cin.ignore(numeric_limits&lt;streamsize&gt;::max(), <span class="str">'\n'</span>);
+<span class="ln">59</span>            cout &lt;&lt; <span class="str">"\n  Invalid number.\n"</span>;
+<span class="ln">60</span>            <span class="kw">continue</span>;
+<span class="ln">61</span>        }
+<span class="ln">62</span>
+<span class="ln">63</span>        <span class="cmt">// Perform the selected operation</span>
+<span class="ln">64</span>        <span class="kw">switch</span> (choice) {
+<span class="ln">65</span>            <span class="kw">case</span> <span class="num">1</span>:
+<span class="ln">66</span>                result = num1 + num2;
+<span class="ln">67</span>                cout &lt;&lt; <span class="str">"\n  "</span> &lt;&lt; num1 &lt;&lt; <span class="str">" + "</span> &lt;&lt; num2 &lt;&lt; <span class="str">" = "</span> &lt;&lt; result &lt;&lt; endl;
+<span class="ln">68</span>                <span class="kw">break</span>;
+<span class="ln">69</span>            <span class="kw">case</span> <span class="num">2</span>:
+<span class="ln">70</span>                result = num1 - num2;
+<span class="ln">71</span>                cout &lt;&lt; <span class="str">"\n  "</span> &lt;&lt; num1 &lt;&lt; <span class="str">" - "</span> &lt;&lt; num2 &lt;&lt; <span class="str">" = "</span> &lt;&lt; result &lt;&lt; endl;
+<span class="ln">72</span>                <span class="kw">break</span>;
+<span class="ln">73</span>            <span class="kw">case</span> <span class="num">3</span>:
+<span class="ln">74</span>                result = num1 * num2;
+<span class="ln">75</span>                cout &lt;&lt; <span class="str">"\n  "</span> &lt;&lt; num1 &lt;&lt; <span class="str">" * "</span> &lt;&lt; num2 &lt;&lt; <span class="str">" = "</span> &lt;&lt; result &lt;&lt; endl;
+<span class="ln">76</span>                <span class="kw">break</span>;
+<span class="ln">77</span>            <span class="kw">case</span> <span class="num">4</span>:
+<span class="ln">78</span>                <span class="kw">if</span> (num2 == <span class="num">0</span>) {
+<span class="ln">79</span>                    cout &lt;&lt; <span class="str">"\n  Error: Division by zero is not allowed.\n"</span>;
+<span class="ln">80</span>                } <span class="kw">else</span> {
+<span class="ln">81</span>                    result = num1 / num2;
+<span class="ln">82</span>                    cout &lt;&lt; <span class="str">"\n  "</span> &lt;&lt; num1 &lt;&lt; <span class="str">" / "</span> &lt;&lt; num2 &lt;&lt; <span class="str">" = "</span> &lt;&lt; result &lt;&lt; endl;
+<span class="ln">83</span>                }
+<span class="ln">84</span>                <span class="kw">break</span>;
+<span class="ln">85</span>        }
+<span class="ln">86</span>
+<span class="ln">87</span>    } <span class="kw">while</span> (<span class="kw">true</span>);
+<span class="ln">88</span>
+<span class="ln">89</span>    <span class="kw">return</span> <span class="num">0</span>;
+<span class="ln">90</span>}</pre></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item"><span class="check">✓</span> Menu-driven interface</div>
+                <div class="feature-item"><span class="check">✓</span> Input validation</div>
+                <div class="feature-item"><span class="check">✓</span> Division by zero check</div>
+                <div class="feature-item"><span class="check">✓</span> Loop until exit</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Project 2: Number Guessing Game ══════════════════ -->
+    <section class="section" id="guessing-game">
+        <div class="divider"></div>
+        <h2 class="section-title"><span class="icon">🎯</span> Number Guessing Game</h2>
+        <p class="section-subtitle">Guess a random number between 1-100 with performance rating based on attempts.</p>
+
+        <div class="project-card">
+            <div class="card-header">
+                <h2>📄 Source Code</h2>
+                <p>Random number generation, attempt tracking, and performance-based feedback.</p>
+                <div class="tags">
+                    <span class="tag highlight">C++</span>
+                    <span class="tag">Random Numbers</span>
+                    <span class="tag">Game Logic</span>
+                    <span class="tag">Replay System</span>
+                </div>
+            </div>
+            <div class="file-tabs">
+                <button class="file-tab active" onclick="showTab(this, 'guess-main')">number_guessing_game.cpp</button>
+            </div>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode('guess-main')">📋 Copy</button>
+                <div class="code-block active" id="guess-main"><pre><span class="ln"> 1</span><span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="ln"> 2</span><span class="prep">#include</span> <span class="inc">&lt;cstdlib&gt;</span>
+<span class="ln"> 3</span><span class="prep">#include</span> <span class="inc">&lt;ctime&gt;</span>
+<span class="ln"> 4</span><span class="prep">#include</span> <span class="inc">&lt;limits&gt;</span>
+<span class="ln"> 5</span>
+<span class="ln"> 6</span><span class="type">int</span> <span class="func">main</span>() {
+<span class="ln"> 7</span>    <span class="cmt">// Seed the random number generator</span>
+<span class="ln"> 8</span>    std::srand(<span class="kw">static_cast</span>&lt;<span class="type">unsigned int</span>&gt;(std::time(<span class="kw">nullptr</span>)));
+<span class="ln"> 9</span>
+<span class="ln">10</span>    <span class="type">char</span> playAgain = <span class="str">'y'</span>;
+<span class="ln">11</span>
+<span class="ln">12</span>    std::cout &lt;&lt; <span class="str">"========================================\n"</span>;
+<span class="ln">13</span>    std::cout &lt;&lt; <span class="str">"     Welcome to the Number Guessing Game!\n"</span>;
+<span class="ln">14</span>    std::cout &lt;&lt; <span class="str">"========================================\n"</span>;
+<span class="ln">15</span>
+<span class="ln">16</span>    <span class="kw">while</span> (playAgain == <span class="str">'y'</span> || playAgain == <span class="str">'Y'</span>) {
+<span class="ln">17</span>        <span class="type">int</span> secretNumber = (std::rand() % <span class="num">100</span>) + <span class="num">1</span>;
+<span class="ln">18</span>        <span class="type">int</span> guess = <span class="num">0</span>;
+<span class="ln">19</span>        <span class="type">int</span> attempts = <span class="num">0</span>;
+<span class="ln">20</span>
+<span class="ln">21</span>        std::cout &lt;&lt; <span class="str">"\nI'm thinking of a number between 1 and 100.\n"</span>;
+<span class="ln">22</span>        std::cout &lt;&lt; <span class="str">"Can you guess what it is?\n\n"</span>;
+<span class="ln">23</span>
+<span class="ln">24</span>        <span class="kw">while</span> (guess != secretNumber) {
+<span class="ln">25</span>            std::cout &lt;&lt; <span class="str">"Enter your guess: "</span>;
+<span class="ln">26</span>
+<span class="ln">27</span>            <span class="kw">if</span> (!(std::cin &gt;&gt; guess)) {
+<span class="ln">28</span>                std::cin.clear();
+<span class="ln">29</span>                std::cin.ignore(std::numeric_limits&lt;std::streamsize&gt;::max(), <span class="str">'\n'</span>);
+<span class="ln">30</span>                std::cout &lt;&lt; <span class="str">"Invalid input! Please enter a number.\n\n"</span>;
+<span class="ln">31</span>                <span class="kw">continue</span>;
+<span class="ln">32</span>            }
+<span class="ln">33</span>
+<span class="ln">34</span>            attempts++;
+<span class="ln">35</span>
+<span class="ln">36</span>            <span class="kw">if</span> (guess &lt; <span class="num">1</span> || guess &gt; <span class="num">100</span>) {
+<span class="ln">37</span>                std::cout &lt;&lt; <span class="str">"Please guess a number between 1 and 100.\n\n"</span>;
+<span class="ln">38</span>            } <span class="kw">else if</span> (guess &lt; secretNumber) {
+<span class="ln">39</span>                std::cout &lt;&lt; <span class="str">"Too Low! Try again.\n\n"</span>;
+<span class="ln">40</span>            } <span class="kw">else if</span> (guess &gt; secretNumber) {
+<span class="ln">41</span>                std::cout &lt;&lt; <span class="str">"Too High! Try again.\n\n"</span>;
+<span class="ln">42</span>            } <span class="kw">else</span> {
+<span class="ln">43</span>                std::cout &lt;&lt; <span class="str">"\nCongratulations! You guessed the number "</span>
+<span class="ln">44</span>                          &lt;&lt; secretNumber &lt;&lt; <span class="str">" in "</span> &lt;&lt; attempts &lt;&lt; <span class="str">" attempt"</span>
+<span class="ln">45</span>                          &lt;&lt; (attempts == <span class="num">1</span> ? <span class="str">""</span> : <span class="str">"s"</span>) &lt;&lt; <span class="str">"!\n"</span>;
+<span class="ln">46</span>            }
+<span class="ln">47</span>        }
+<span class="ln">48</span>
+<span class="ln">49</span>        <span class="cmt">// Rating based on number of attempts</span>
+<span class="ln">50</span>        std::cout &lt;&lt; <span class="str">"\n--- Performance ---\n"</span>;
+<span class="ln">51</span>        <span class="kw">if</span> (attempts &lt;= <span class="num">3</span>) {
+<span class="ln">52</span>            std::cout &lt;&lt; <span class="str">"Outstanding! You're a mind reader!\n"</span>;
+<span class="ln">53</span>        } <span class="kw">else if</span> (attempts &lt;= <span class="num">7</span>) {
+<span class="ln">54</span>            std::cout &lt;&lt; <span class="str">"Great job! Very impressive!\n"</span>;
+<span class="ln">55</span>        } <span class="kw">else if</span> (attempts &lt;= <span class="num">10</span>) {
+<span class="ln">56</span>            std::cout &lt;&lt; <span class="str">"Good effort! Not bad at all.\n"</span>;
+<span class="ln">57</span>        } <span class="kw">else</span> {
+<span class="ln">58</span>            std::cout &lt;&lt; <span class="str">"You got there eventually! Keep practicing.\n"</span>;
+<span class="ln">59</span>        }
+<span class="ln">60</span>
+<span class="ln">61</span>        std::cout &lt;&lt; <span class="str">"\nWould you like to play again? (y/n): "</span>;
+<span class="ln">62</span>        std::cin &gt;&gt; playAgain;
+<span class="ln">63</span>    }
+<span class="ln">64</span>
+<span class="ln">65</span>    std::cout &lt;&lt; <span class="str">"\nThanks for playing! Goodbye.\n"</span>;
+<span class="ln">66</span>
+<span class="ln">67</span>    <span class="kw">return</span> <span class="num">0</span>;
+<span class="ln">68</span>}</pre></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item"><span class="check">✓</span> Random number generation</div>
+                <div class="feature-item"><span class="check">✓</span> Attempt counting</div>
+                <div class="feature-item"><span class="check">✓</span> Performance rating</div>
+                <div class="feature-item"><span class="check">✓</span> Play again option</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Project 3: Tic Tac Toe ═══════════════════════════ -->
+    <section class="section" id="tic-tac-toe">
+        <div class="divider"></div>
+        <h2 class="section-title"><span class="icon">❌⭕</span> Tic Tac Toe</h2>
+        <p class="section-subtitle">Classic two-player Tic-Tac-Toe game with board display, win/draw detection.</p>
+
+        <div class="project-card">
+            <div class="card-header">
+                <h2>📄 Source Code</h2>
+                <p>2D array board, row/column/diagonal win checks, and move validation.</p>
+                <div class="tags">
+                    <span class="tag highlight">C++</span>
+                    <span class="tag">2D Arrays</span>
+                    <span class="tag">Game Logic</span>
+                    <span class="tag">Two Players</span>
+                </div>
+            </div>
+            <div class="file-tabs">
+                <button class="file-tab active" onclick="showTab(this, 'ttt-main')">TicTacToe.cpp</button>
+            </div>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode('ttt-main')">📋 Copy</button>
+                <div class="code-block active" id="ttt-main"><pre><span class="ln">  1</span><span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="ln">  2</span><span class="prep">#include</span> <span class="inc">&lt;limits&gt;</span>
+<span class="ln">  3</span><span class="kw">using</span> <span class="kw">namespace</span> std;
+<span class="ln">  4</span>
+<span class="ln">  5</span><span class="cmt">// ---------- Game board ----------</span>
+<span class="ln">  6</span><span class="type">char</span> board[<span class="num">3</span>][<span class="num">3</span>] = {
+<span class="ln">  7</span>    {<span class="str">'1'</span>, <span class="str">'2'</span>, <span class="str">'3'</span>},
+<span class="ln">  8</span>    {<span class="str">'4'</span>, <span class="str">'5'</span>, <span class="str">'6'</span>},
+<span class="ln">  9</span>    {<span class="str">'7'</span>, <span class="str">'8'</span>, <span class="str">'9'</span>}
+<span class="ln"> 10</span>};
+<span class="ln"> 11</span>
+<span class="ln"> 12</span><span class="type">char</span> currentPlayer = <span class="str">'X'</span>;
+<span class="ln"> 13</span>
+<span class="ln"> 14</span><span class="cmt">// ---------- Display the board ----------</span>
+<span class="ln"> 15</span><span class="type">void</span> <span class="func">displayBoard</span>() {
+<span class="ln"> 16</span>    cout &lt;&lt; <span class="str">"\n"</span>;
+<span class="ln"> 17</span>    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; ++i) {
+<span class="ln"> 18</span>        cout &lt;&lt; <span class="str">" "</span> &lt;&lt; board[i][<span class="num">0</span>] &lt;&lt; <span class="str">" | "</span> &lt;&lt; board[i][<span class="num">1</span>] &lt;&lt; <span class="str">" | "</span> &lt;&lt; board[i][<span class="num">2</span>] &lt;&lt; <span class="str">"\n"</span>;
+<span class="ln"> 19</span>        <span class="kw">if</span> (i &lt; <span class="num">2</span>) cout &lt;&lt; <span class="str">"---+---+---\n"</span>;
+<span class="ln"> 20</span>    }
+<span class="ln"> 21</span>    cout &lt;&lt; <span class="str">"\n"</span>;
+<span class="ln"> 22</span>}
+<span class="ln"> 23</span>
+<span class="ln"> 24</span><span class="cmt">// ---------- Check for a winner ----------</span>
+<span class="ln"> 25</span><span class="cmt">// Returns 'X' or 'O' if someone won, 'D' for draw, or ' ' if game continues.</span>
+<span class="ln"> 26</span><span class="type">char</span> <span class="func">checkResult</span>() {
+<span class="ln"> 27</span>    <span class="cmt">// Rows</span>
+<span class="ln"> 28</span>    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; ++i)
+<span class="ln"> 29</span>        <span class="kw">if</span> (board[i][<span class="num">0</span>] == board[i][<span class="num">1</span>] &amp;&amp; board[i][<span class="num">1</span>] == board[i][<span class="num">2</span>])
+<span class="ln"> 30</span>            <span class="kw">return</span> board[i][<span class="num">0</span>];
+<span class="ln"> 31</span>
+<span class="ln"> 32</span>    <span class="cmt">// Columns</span>
+<span class="ln"> 33</span>    <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; <span class="num">3</span>; ++j)
+<span class="ln"> 34</span>        <span class="kw">if</span> (board[<span class="num">0</span>][j] == board[<span class="num">1</span>][j] &amp;&amp; board[<span class="num">1</span>][j] == board[<span class="num">2</span>][j])
+<span class="ln"> 35</span>            <span class="kw">return</span> board[<span class="num">0</span>][j];
+<span class="ln"> 36</span>
+<span class="ln"> 37</span>    <span class="cmt">// Diagonals</span>
+<span class="ln"> 38</span>    <span class="kw">if</span> (board[<span class="num">0</span>][<span class="num">0</span>] == board[<span class="num">1</span>][<span class="num">1</span>] &amp;&amp; board[<span class="num">1</span>][<span class="num">1</span>] == board[<span class="num">2</span>][<span class="num">2</span>])
+<span class="ln"> 39</span>        <span class="kw">return</span> board[<span class="num">0</span>][<span class="num">0</span>];
+<span class="ln"> 40</span>    <span class="kw">if</span> (board[<span class="num">0</span>][<span class="num">2</span>] == board[<span class="num">1</span>][<span class="num">1</span>] &amp;&amp; board[<span class="num">1</span>][<span class="num">1</span>] == board[<span class="num">2</span>][<span class="num">0</span>])
+<span class="ln"> 41</span>        <span class="kw">return</span> board[<span class="num">0</span>][<span class="num">2</span>];
+<span class="ln"> 42</span>
+<span class="ln"> 43</span>    <span class="cmt">// Check for empty cells (game still going)</span>
+<span class="ln"> 44</span>    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; ++i)
+<span class="ln"> 45</span>        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; <span class="num">3</span>; ++j)
+<span class="ln"> 46</span>            <span class="kw">if</span> (board[i][j] != <span class="str">'X'</span> &amp;&amp; board[i][j] != <span class="str">'O'</span>)
+<span class="ln"> 47</span>                <span class="kw">return</span> <span class="str">' '</span>;   <span class="cmt">// game continues</span>
+<span class="ln"> 48</span>
+<span class="ln"> 49</span>    <span class="kw">return</span> <span class="str">'D'</span>;  <span class="cmt">// draw</span>
+<span class="ln"> 50</span>}
+<span class="ln"> 51</span>
+<span class="ln"> 52</span><span class="cmt">// ---------- Place a mark ----------</span>
+<span class="ln"> 53</span><span class="type">bool</span> <span class="func">placeMove</span>(<span class="type">int</span> cell) {
+<span class="ln"> 54</span>    <span class="kw">if</span> (cell &lt; <span class="num">1</span> || cell &gt; <span class="num">9</span>) <span class="kw">return</span> <span class="kw">false</span>;
+<span class="ln"> 55</span>
+<span class="ln"> 56</span>    <span class="type">int</span> row = (cell - <span class="num">1</span>) / <span class="num">3</span>;
+<span class="ln"> 57</span>    <span class="type">int</span> col = (cell - <span class="num">1</span>) % <span class="num">3</span>;
+<span class="ln"> 58</span>
+<span class="ln"> 59</span>    <span class="kw">if</span> (board[row][col] == <span class="str">'X'</span> || board[row][col] == <span class="str">'O'</span>)
+<span class="ln"> 60</span>        <span class="kw">return</span> <span class="kw">false</span>;          <span class="cmt">// cell already taken</span>
+<span class="ln"> 61</span>
+<span class="ln"> 62</span>    board[row][col] = currentPlayer;
+<span class="ln"> 63</span>    <span class="kw">return</span> <span class="kw">true</span>;
+<span class="ln"> 64</span>}
+<span class="ln"> 65</span>
+<span class="ln"> 66</span><span class="cmt">// ---------- Main game loop ----------</span>
+<span class="ln"> 67</span><span class="type">int</span> <span class="func">main</span>() {
+<span class="ln"> 68</span>    cout &lt;&lt; <span class="str">"=== Tic-Tac-Toe ===\n"</span>;
+<span class="ln"> 69</span>    cout &lt;&lt; <span class="str">"Player 1 = X   |   Player 2 = O\n"</span>;
+<span class="ln"> 70</span>    cout &lt;&lt; <span class="str">"Enter a number (1-9) to place your mark.\n"</span>;
+<span class="ln"> 71</span>
+<span class="ln"> 72</span>    <span class="type">char</span> result = <span class="str">' '</span>;
+<span class="ln"> 73</span>
+<span class="ln"> 74</span>    <span class="kw">while</span> (result == <span class="str">' '</span>) {
+<span class="ln"> 75</span>        displayBoard();
+<span class="ln"> 76</span>        cout &lt;&lt; <span class="str">"Player "</span> &lt;&lt; currentPlayer &lt;&lt; <span class="str">", enter your move: "</span>;
+<span class="ln"> 77</span>
+<span class="ln"> 78</span>        <span class="type">int</span> move;
+<span class="ln"> 79</span>        <span class="kw">if</span> (!(cin &gt;&gt; move)) {
+<span class="ln"> 80</span>            cin.clear();
+<span class="ln"> 81</span>            cin.ignore(numeric_limits&lt;streamsize&gt;::max(), <span class="str">'\n'</span>);
+<span class="ln"> 82</span>            cout &lt;&lt; <span class="str">"Invalid input. Please enter a number between 1 and 9.\n"</span>;
+<span class="ln"> 83</span>            <span class="kw">continue</span>;
+<span class="ln"> 84</span>        }
+<span class="ln"> 85</span>
+<span class="ln"> 86</span>        <span class="kw">if</span> (!placeMove(move)) {
+<span class="ln"> 87</span>            cout &lt;&lt; <span class="str">"Invalid move! Try again.\n"</span>;
+<span class="ln"> 88</span>            <span class="kw">continue</span>;
+<span class="ln"> 89</span>        }
+<span class="ln"> 90</span>
+<span class="ln"> 91</span>        result = checkResult();
+<span class="ln"> 92</span>
+<span class="ln"> 93</span>        <span class="kw">if</span> (result == <span class="str">' '</span>)
+<span class="ln"> 94</span>            currentPlayer = (currentPlayer == <span class="str">'X'</span>) ? <span class="str">'O'</span> : <span class="str">'X'</span>;
+<span class="ln"> 95</span>    }
+<span class="ln"> 96</span>
+<span class="ln"> 97</span>    displayBoard();
+<span class="ln"> 98</span>
+<span class="ln"> 99</span>    <span class="kw">if</span> (result == <span class="str">'D'</span>)
+<span class="ln">100</span>        cout &lt;&lt; <span class="str">"It's a draw!\n"</span>;
+<span class="ln">101</span>    <span class="kw">else</span>
+<span class="ln">102</span>        cout &lt;&lt; <span class="str">"Player "</span> &lt;&lt; result &lt;&lt; <span class="str">" wins! Congratulations!\n"</span>;
+<span class="ln">103</span>
+<span class="ln">104</span>    <span class="kw">return</span> <span class="num">0</span>;
+<span class="ln">105</span>}</pre></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item"><span class="check">✓</span> 3×3 board display</div>
+                <div class="feature-item"><span class="check">✓</span> Win detection (rows/cols/diags)</div>
+                <div class="feature-item"><span class="check">✓</span> Draw detection</div>
+                <div class="feature-item"><span class="check">✓</span> Move validation</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Project 4: Contact Management System ═════════════ -->
+    <section class="section" id="contact-manager">
+        <div class="divider"></div>
+        <h2 class="section-title"><span class="icon">📇</span> Contact Management System</h2>
+        <p class="section-subtitle">Full CRUD contact manager with file persistence using OOP and multi-file architecture.</p>
+
+        <div class="project-card">
+            <div class="card-header">
+                <h2>📄 Source Code</h2>
+                <p>Object-oriented design with Contact and ContactManager classes. Pipe-delimited file storage.</p>
+                <div class="tags">
+                    <span class="tag highlight">C++</span>
+                    <span class="tag">OOP</span>
+                    <span class="tag">File I/O</span>
+                    <span class="tag">CRUD</span>
+                    <span class="tag">Multi-file</span>
+                </div>
+            </div>
+            <div class="file-tabs">
+                <button class="file-tab active" onclick="showTab(this, 'cm-main')">main.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'cm-contact-h')">Contact.h</button>
+                <button class="file-tab" onclick="showTab(this, 'cm-contact-cpp')">Contact.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'cm-manager-h')">ContactManager.h</button>
+                <button class="file-tab" onclick="showTab(this, 'cm-manager-cpp')">ContactManager.cpp</button>
+            </div>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyActiveCode(this)">📋 Copy</button>
+                <div class="code-block active" id="cm-main"><pre><span class="cmt">// ==========================================================</span>
+<span class="cmt">//  Contact Management System — Entry Point</span>
+<span class="cmt">//  Manages contacts with file-based persistence.</span>
+<span class="cmt">// ==========================================================</span>
+
+<span class="prep">#include</span> <span class="inc">"ContactManager.h"</span>
+
+<span class="type">int</span> <span class="func">main</span>() {
+    ContactManager manager;
+    manager.run();
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre></div>
+                <div class="code-block" id="cm-contact-h"><pre><span class="prep">#ifndef</span> CONTACT_H
+<span class="prep">#define</span> CONTACT_H
+
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;fstream&gt;</span>
+
+<span class="kw">class</span> <span class="type">Contact</span> {
+<span class="kw">private</span>:
+    <span class="type">int</span> id;
+    std::<span class="type">string</span> name;
+    std::<span class="type">string</span> phone;
+    std::<span class="type">string</span> email;
+    std::<span class="type">string</span> address;
+
+<span class="kw">public</span>:
+    <span class="cmt">// Constructors</span>
+    <span class="func">Contact</span>();
+    <span class="func">Contact</span>(<span class="type">int</span> id, <span class="kw">const</span> std::<span class="type">string</span>&amp; name, <span class="kw">const</span> std::<span class="type">string</span>&amp; phone,
+            <span class="kw">const</span> std::<span class="type">string</span>&amp; email, <span class="kw">const</span> std::<span class="type">string</span>&amp; address);
+
+    <span class="cmt">// Getters</span>
+    <span class="type">int</span> <span class="func">getId</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getName</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getPhone</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getEmail</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getAddress</span>() <span class="kw">const</span>;
+
+    <span class="cmt">// Setters</span>
+    <span class="type">void</span> <span class="func">setName</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; name);
+    <span class="type">void</span> <span class="func">setPhone</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; phone);
+    <span class="type">void</span> <span class="func">setEmail</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; email);
+    <span class="type">void</span> <span class="func">setAddress</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; address);
+
+    <span class="cmt">// Display</span>
+    <span class="type">void</span> <span class="func">displayInfo</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">displayShort</span>() <span class="kw">const</span>;
+
+    <span class="cmt">// File I/O — pipe-delimited format</span>
+    <span class="type">void</span> <span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span>;
+    <span class="type">bool</span> <span class="func">loadFromFile</span>(std::ifstream&amp; in);
+};
+
+<span class="prep">#endif</span> <span class="cmt">// CONTACT_H</span></pre></div>
+                <div class="code-block" id="cm-contact-cpp"><pre><span class="prep">#include</span> <span class="inc">"Contact.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;sstream&gt;</span>
+
+<span class="cmt">// ── Constructors ─────────────────────────────────────────────</span>
+
+Contact::<span class="func">Contact</span>() : id(<span class="num">0</span>) {}
+
+Contact::<span class="func">Contact</span>(<span class="type">int</span> id, <span class="kw">const</span> std::<span class="type">string</span>&amp; name, <span class="kw">const</span> std::<span class="type">string</span>&amp; phone,
+                 <span class="kw">const</span> std::<span class="type">string</span>&amp; email, <span class="kw">const</span> std::<span class="type">string</span>&amp; address)
+    : id(id), name(name), phone(phone), email(email), address(address) {}
+
+<span class="cmt">// ── Getters ──────────────────────────────────────────────────</span>
+
+<span class="type">int</span>         Contact::<span class="func">getId</span>()      <span class="kw">const</span> { <span class="kw">return</span> id; }
+std::<span class="type">string</span> Contact::<span class="func">getName</span>()    <span class="kw">const</span> { <span class="kw">return</span> name; }
+std::<span class="type">string</span> Contact::<span class="func">getPhone</span>()   <span class="kw">const</span> { <span class="kw">return</span> phone; }
+std::<span class="type">string</span> Contact::<span class="func">getEmail</span>()   <span class="kw">const</span> { <span class="kw">return</span> email; }
+std::<span class="type">string</span> Contact::<span class="func">getAddress</span>() <span class="kw">const</span> { <span class="kw">return</span> address; }
+
+<span class="cmt">// ── Setters ──────────────────────────────────────────────────</span>
+
+<span class="type">void</span> Contact::<span class="func">setName</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; n)    { name = n; }
+<span class="type">void</span> Contact::<span class="func">setPhone</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; p)   { phone = p; }
+<span class="type">void</span> Contact::<span class="func">setEmail</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; e)   { email = e; }
+<span class="type">void</span> Contact::<span class="func">setAddress</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; a) { address = a; }
+
+<span class="cmt">// ── Display ──────────────────────────────────────────────────</span>
+
+<span class="type">void</span> Contact::<span class="func">displayInfo</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"\n  +----------------------------------+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | Contact Details                  |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  +----------------------------------+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | ID      : "</span> &lt;&lt; id      &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | Name    : "</span> &lt;&lt; name    &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | Phone   : "</span> &lt;&lt; phone   &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | Email   : "</span> &lt;&lt; email   &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  | Address : "</span> &lt;&lt; address &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  +----------------------------------+\n"</span>;
+}
+
+<span class="type">void</span> Contact::<span class="func">displayShort</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"  "</span> &lt;&lt; std::left
+              &lt;&lt; std::setw(<span class="num">6</span>)  &lt;&lt; id
+              &lt;&lt; std::setw(<span class="num">22</span>) &lt;&lt; name
+              &lt;&lt; std::setw(<span class="num">16</span>) &lt;&lt; phone
+              &lt;&lt; email &lt;&lt; <span class="str">"\n"</span>;
+}
+
+<span class="cmt">// ── File I/O (pipe-delimited, one contact per line) ──────────</span>
+
+<span class="type">void</span> Contact::<span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span> {
+    out &lt;&lt; id &lt;&lt; <span class="str">"|"</span> &lt;&lt; name &lt;&lt; <span class="str">"|"</span> &lt;&lt; phone &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; email &lt;&lt; <span class="str">"|"</span> &lt;&lt; address &lt;&lt; <span class="str">"\n"</span>;
+}
+
+<span class="type">bool</span> Contact::<span class="func">loadFromFile</span>(std::ifstream&amp; in) {
+    std::<span class="type">string</span> line;
+    <span class="kw">if</span> (!std::getline(in, line) || line.empty())
+        <span class="kw">return</span> <span class="kw">false</span>;
+
+    std::istringstream ss(line);
+    std::<span class="type">string</span> idStr;
+
+    std::getline(ss, idStr, <span class="str">'|'</span>);
+    std::getline(ss, name, <span class="str">'|'</span>);
+    std::getline(ss, phone, <span class="str">'|'</span>);
+    std::getline(ss, email, <span class="str">'|'</span>);
+    std::getline(ss, address);
+
+    <span class="kw">try</span> {
+        id = std::stoi(idStr);
+    } <span class="kw">catch</span> (...) {
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre></div>
+                <div class="code-block" id="cm-manager-h"><pre><span class="prep">#ifndef</span> CONTACTMANAGER_H
+<span class="prep">#define</span> CONTACTMANAGER_H
+
+<span class="prep">#include</span> <span class="inc">"Contact.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;vector&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+
+<span class="kw">class</span> <span class="type">ContactManager</span> {
+<span class="kw">private</span>:
+    std::vector&lt;Contact&gt; contacts;
+    std::<span class="type">string</span> filename;
+    <span class="type">int</span> nextId;
+
+    <span class="cmt">// Internal helpers</span>
+    <span class="type">void</span> <span class="func">loadContacts</span>();
+    <span class="type">void</span> <span class="func">saveContacts</span>() <span class="kw">const</span>;
+    <span class="type">int</span> <span class="func">findIndexById</span>(<span class="type">int</span> id) <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">generateNextId</span>();
+
+<span class="kw">public</span>:
+    <span class="func">ContactManager</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; filename = <span class="str">"contacts.dat"</span>);
+
+    <span class="cmt">// Core operations</span>
+    <span class="type">void</span> <span class="func">addContact</span>();
+    <span class="type">void</span> <span class="func">viewAllContacts</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">searchContacts</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">editContact</span>();
+    <span class="type">void</span> <span class="func">deleteContact</span>();
+
+    <span class="cmt">// Menu</span>
+    <span class="type">void</span> <span class="func">run</span>();
+};
+
+<span class="prep">#endif</span> <span class="cmt">// CONTACTMANAGER_H</span></pre></div>
+                <div class="code-block" id="cm-manager-cpp"><pre><span class="prep">#include</span> <span class="inc">"ContactManager.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;algorithm&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;limits&gt;</span>
+
+<span class="cmt">// ── Constructor ──────────────────────────────────────────────</span>
+
+ContactManager::<span class="func">ContactManager</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; filename)
+    : filename(filename), nextId(<span class="num">1</span>) {
+    loadContacts();
+}
+
+<span class="cmt">// ── File persistence ─────────────────────────────────────────</span>
+
+<span class="type">void</span> ContactManager::<span class="func">loadContacts</span>() {
+    contacts.clear();
+    std::ifstream fin(filename);
+    <span class="kw">if</span> (!fin.is_open()) <span class="kw">return</span>;
+
+    Contact c;
+    <span class="kw">while</span> (c.loadFromFile(fin))
+        contacts.push_back(c);
+
+    fin.close();
+    generateNextId();
+}
+
+<span class="type">void</span> ContactManager::<span class="func">saveContacts</span>() <span class="kw">const</span> {
+    std::ofstream fout(filename, std::ios::trunc);
+    <span class="kw">if</span> (!fout.is_open()) {
+        std::cerr &lt;&lt; <span class="str">"\n  [!] Error: Could not open file for writing.\n"</span>;
+        <span class="kw">return</span>;
+    }
+    <span class="kw">for</span> (<span class="kw">const</span> <span class="kw">auto</span>&amp; c : contacts)
+        c.saveToFile(fout);
+    fout.close();
+}
+
+<span class="cmt">// ── Helpers ──────────────────────────────────────────────────</span>
+
+<span class="type">int</span> ContactManager::<span class="func">findIndexById</span>(<span class="type">int</span> id) <span class="kw">const</span> {
+    <span class="kw">for</span> (size_t i = <span class="num">0</span>; i &lt; contacts.size(); ++i)
+        <span class="kw">if</span> (contacts[i].getId() == id) <span class="kw">return</span> <span class="kw">static_cast</span>&lt;<span class="type">int</span>&gt;(i);
+    <span class="kw">return</span> -<span class="num">1</span>;
+}
+
+<span class="type">void</span> ContactManager::<span class="func">generateNextId</span>() {
+    nextId = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">const</span> <span class="kw">auto</span>&amp; c : contacts)
+        <span class="kw">if</span> (c.getId() &gt;= nextId) nextId = c.getId() + <span class="num">1</span>;
+}
+
+<span class="cmt">// ── Add / View / Search / Edit / Delete / Run ────────────────</span>
+<span class="cmt">// (Full implementation: 200+ lines — see full source)</span>
+
+<span class="type">void</span> ContactManager::<span class="func">addContact</span>() { <span class="cmt">/* ... Add contact with auto-ID ... */</span> }
+<span class="type">void</span> ContactManager::<span class="func">viewAllContacts</span>() <span class="kw">const</span> { <span class="cmt">/* ... Table display ... */</span> }
+<span class="type">void</span> ContactManager::<span class="func">searchContacts</span>() <span class="kw">const</span> { <span class="cmt">/* ... Case-insensitive search ... */</span> }
+<span class="type">void</span> ContactManager::<span class="func">editContact</span>() { <span class="cmt">/* ... Edit with keep-current option ... */</span> }
+<span class="type">void</span> ContactManager::<span class="func">deleteContact</span>() { <span class="cmt">/* ... Delete with confirmation ... */</span> }
+
+<span class="type">void</span> ContactManager::<span class="func">run</span>() {
+    <span class="type">int</span> choice = <span class="num">0</span>;
+    <span class="kw">while</span> (<span class="kw">true</span>) {
+        std::cout &lt;&lt; <span class="str">"\n  ==========================================\n"</span>;
+        std::cout &lt;&lt; <span class="str">"       C O N T A C T   M A N A G E R       \n"</span>;
+        std::cout &lt;&lt; <span class="str">"  ==========================================\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    1. Add Contact\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    2. View All Contacts\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    3. Search Contacts\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    4. Edit Contact\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    5. Delete Contact\n"</span>;
+        std::cout &lt;&lt; <span class="str">"    0. Exit\n"</span>;
+        std::cout &lt;&lt; <span class="str">"  ------------------------------------------\n"</span>;
+        std::cout &lt;&lt; <span class="str">"  Choice: "</span>;
+        <span class="cmt">// ... menu handling ...</span>
+    }
+}</pre></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item"><span class="check">✓</span> OOP (classes + headers)</div>
+                <div class="feature-item"><span class="check">✓</span> CRUD operations</div>
+                <div class="feature-item"><span class="check">✓</span> File persistence (.dat)</div>
+                <div class="feature-item"><span class="check">✓</span> Case-insensitive search</div>
+                <div class="feature-item"><span class="check">✓</span> Auto-incrementing IDs</div>
+                <div class="feature-item"><span class="check">✓</span> Edit with keep-current</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Project 5: Hotel Management System ═══════════════ -->
+    <section class="section" id="hotel-manager">
+        <div class="divider"></div>
+        <h2 class="section-title"><span class="icon">🏨</span> Hotel Management System</h2>
+        <p class="section-subtitle">Complete hotel management with rooms, customers, check-in/out, billing, and file persistence.</p>
+
+        <div class="project-card">
+            <div class="card-header">
+                <h2>📄 Source Code</h2>
+                <p>Multi-class architecture with Room, Customer, Billing, and Hotel classes. 30 default rooms across 3 types.</p>
+                <div class="tags">
+                    <span class="tag highlight">C++</span>
+                    <span class="tag">OOP</span>
+                    <span class="tag">File I/O</span>
+                    <span class="tag">Billing System</span>
+                    <span class="tag">Multi-file</span>
+                    <span class="tag">Date Handling</span>
+                </div>
+            </div>
+            <div class="file-tabs">
+                <button class="file-tab active" onclick="showTab(this, 'hm-main')">main.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-room-h')">Room.h</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-room-cpp')">Room.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-customer-h')">Customer.h</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-customer-cpp')">Customer.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-billing-h')">Billing.h</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-billing-cpp')">Billing.cpp</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-hotel-h')">Hotel.h</button>
+                <button class="file-tab" onclick="showTab(this, 'hm-hotel-cpp')">Hotel.cpp</button>
+            </div>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyActiveCode(this)">📋 Copy</button>
+                <div class="code-block active" id="hm-main"><pre><span class="cmt">// ==========================================================</span>
+<span class="cmt">//  Hotel Management System — Entry Point</span>
+<span class="cmt">//  Manages room bookings, customers, and billing with</span>
+<span class="cmt">//  file-based persistence.</span>
+<span class="cmt">// ==========================================================</span>
+
+<span class="prep">#include</span> <span class="inc">"Hotel.h"</span>
+
+<span class="type">int</span> <span class="func">main</span>() {
+    Hotel hotel;
+    hotel.run();
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre></div>
+                <div class="code-block" id="hm-room-h"><pre><span class="prep">#ifndef</span> ROOM_H
+<span class="prep">#define</span> ROOM_H
+
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;fstream&gt;</span>
+
+<span class="kw">class</span> <span class="type">Room</span> {
+<span class="kw">private</span>:
+    <span class="type">int</span> roomNumber;
+    std::<span class="type">string</span> type;        <span class="cmt">// "Single", "Double", "Suite"</span>
+    <span class="type">double</span> pricePerNight;
+    <span class="type">bool</span> occupied;
+    std::<span class="type">string</span> guestName;
+    std::<span class="type">string</span> checkInDate; <span class="cmt">// "YYYY-MM-DD"</span>
+
+<span class="kw">public</span>:
+    <span class="func">Room</span>();
+    <span class="func">Room</span>(<span class="type">int</span> roomNumber, <span class="kw">const</span> std::<span class="type">string</span>&amp; type, <span class="type">double</span> pricePerNight);
+
+    <span class="type">int</span> <span class="func">getRoomNumber</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getType</span>() <span class="kw">const</span>;
+    <span class="type">double</span> <span class="func">getPricePerNight</span>() <span class="kw">const</span>;
+    <span class="type">bool</span> <span class="func">isOccupied</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getGuestName</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getCheckInDate</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">checkIn</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; guestName, <span class="kw">const</span> std::<span class="type">string</span>&amp; date);
+    <span class="type">void</span> <span class="func">checkOut</span>();
+
+    <span class="type">void</span> <span class="func">displayInfo</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">displayBrief</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">loadFromFile</span>(std::ifstream&amp; in);
+};
+
+<span class="prep">#endif</span> <span class="cmt">// ROOM_H</span></pre></div>
+                <div class="code-block" id="hm-room-cpp"><pre><span class="prep">#include</span> <span class="inc">"Room.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;sstream&gt;</span>
+
+Room::<span class="func">Room</span>()
+    : roomNumber(<span class="num">0</span>), type(<span class="str">""</span>), pricePerNight(<span class="num">0.0</span>),
+      occupied(<span class="kw">false</span>), guestName(<span class="str">""</span>), checkInDate(<span class="str">""</span>) {}
+
+Room::<span class="func">Room</span>(<span class="type">int</span> roomNumber, <span class="kw">const</span> std::<span class="type">string</span>&amp; type, <span class="type">double</span> pricePerNight)
+    : roomNumber(roomNumber), type(type), pricePerNight(pricePerNight),
+      occupied(<span class="kw">false</span>), guestName(<span class="str">""</span>), checkInDate(<span class="str">""</span>) {}
+
+<span class="type">int</span> Room::<span class="func">getRoomNumber</span>() <span class="kw">const</span> { <span class="kw">return</span> roomNumber; }
+std::<span class="type">string</span> Room::<span class="func">getType</span>() <span class="kw">const</span> { <span class="kw">return</span> type; }
+<span class="type">double</span> Room::<span class="func">getPricePerNight</span>() <span class="kw">const</span> { <span class="kw">return</span> pricePerNight; }
+<span class="type">bool</span> Room::<span class="func">isOccupied</span>() <span class="kw">const</span> { <span class="kw">return</span> occupied; }
+std::<span class="type">string</span> Room::<span class="func">getGuestName</span>() <span class="kw">const</span> { <span class="kw">return</span> guestName; }
+std::<span class="type">string</span> Room::<span class="func">getCheckInDate</span>() <span class="kw">const</span> { <span class="kw">return</span> checkInDate; }
+
+<span class="type">void</span> Room::<span class="func">checkIn</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; guest, <span class="kw">const</span> std::<span class="type">string</span>&amp; date) {
+    occupied = <span class="kw">true</span>;
+    guestName = guest;
+    checkInDate = date;
+}
+
+<span class="type">void</span> Room::<span class="func">checkOut</span>() {
+    occupied = <span class="kw">false</span>;
+    guestName = <span class="str">""</span>;
+    checkInDate = <span class="str">""</span>;
+}
+
+<span class="type">void</span> Room::<span class="func">displayInfo</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"+----------------------------------------+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|           ROOM INFORMATION             |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+----------------------------------------+\n"</span>;
+    <span class="cmt">// ... formatted display ...</span>
+}
+
+<span class="type">void</span> Room::<span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span> {
+    out &lt;&lt; roomNumber &lt;&lt; <span class="str">"|"</span> &lt;&lt; type &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; pricePerNight &lt;&lt; <span class="str">"|"</span> &lt;&lt; occupied &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; guestName &lt;&lt; <span class="str">"|"</span> &lt;&lt; checkInDate &lt;&lt; <span class="str">"\n"</span>;
+}</pre></div>
+                <div class="code-block" id="hm-customer-h"><pre><span class="prep">#ifndef</span> CUSTOMER_H
+<span class="prep">#define</span> CUSTOMER_H
+
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;fstream&gt;</span>
+
+<span class="kw">class</span> <span class="type">Customer</span> {
+<span class="kw">private</span>:
+    <span class="type">int</span> id;
+    std::<span class="type">string</span> name;
+    std::<span class="type">string</span> phone;
+    std::<span class="type">string</span> address;
+
+<span class="kw">public</span>:
+    <span class="func">Customer</span>();
+    <span class="func">Customer</span>(<span class="type">int</span> id, <span class="kw">const</span> std::<span class="type">string</span>&amp; name,
+             <span class="kw">const</span> std::<span class="type">string</span>&amp; phone, <span class="kw">const</span> std::<span class="type">string</span>&amp; address);
+
+    <span class="type">int</span> <span class="func">getId</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getName</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getPhone</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getAddress</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">displayInfo</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">loadFromFile</span>(std::ifstream&amp; in);
+};
+
+<span class="prep">#endif</span> <span class="cmt">// CUSTOMER_H</span></pre></div>
+                <div class="code-block" id="hm-customer-cpp"><pre><span class="prep">#include</span> <span class="inc">"Customer.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;sstream&gt;</span>
+
+Customer::<span class="func">Customer</span>()
+    : id(<span class="num">0</span>), name(<span class="str">""</span>), phone(<span class="str">""</span>), address(<span class="str">""</span>) {}
+
+Customer::<span class="func">Customer</span>(<span class="type">int</span> id, <span class="kw">const</span> std::<span class="type">string</span>&amp; name,
+                   <span class="kw">const</span> std::<span class="type">string</span>&amp; phone, <span class="kw">const</span> std::<span class="type">string</span>&amp; address)
+    : id(id), name(name), phone(phone), address(address) {}
+
+<span class="type">int</span> Customer::<span class="func">getId</span>() <span class="kw">const</span> { <span class="kw">return</span> id; }
+std::<span class="type">string</span> Customer::<span class="func">getName</span>() <span class="kw">const</span> { <span class="kw">return</span> name; }
+std::<span class="type">string</span> Customer::<span class="func">getPhone</span>() <span class="kw">const</span> { <span class="kw">return</span> phone; }
+std::<span class="type">string</span> Customer::<span class="func">getAddress</span>() <span class="kw">const</span> { <span class="kw">return</span> address; }
+
+<span class="type">void</span> Customer::<span class="func">displayInfo</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"+----------------------------------------+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|          CUSTOMER INFORMATION           |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+----------------------------------------+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"| Customer ID : "</span> &lt;&lt; std::left &lt;&lt; std::setw(<span class="num">24</span>) &lt;&lt; id &lt;&lt; <span class="str">"|\n"</span>;
+    std::cout &lt;&lt; <span class="str">"| Name        : "</span> &lt;&lt; std::left &lt;&lt; std::setw(<span class="num">24</span>) &lt;&lt; name &lt;&lt; <span class="str">"|\n"</span>;
+    std::cout &lt;&lt; <span class="str">"| Phone       : "</span> &lt;&lt; std::left &lt;&lt; std::setw(<span class="num">24</span>) &lt;&lt; phone &lt;&lt; <span class="str">"|\n"</span>;
+    std::cout &lt;&lt; <span class="str">"| Address     : "</span> &lt;&lt; std::left &lt;&lt; std::setw(<span class="num">24</span>) &lt;&lt; address &lt;&lt; <span class="str">"|\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+----------------------------------------+\n"</span>;
+}
+
+<span class="type">void</span> Customer::<span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span> {
+    out &lt;&lt; id &lt;&lt; <span class="str">"|"</span> &lt;&lt; name &lt;&lt; <span class="str">"|"</span> &lt;&lt; phone &lt;&lt; <span class="str">"|"</span> &lt;&lt; address &lt;&lt; <span class="str">"\n"</span>;
+}
+
+<span class="type">void</span> Customer::<span class="func">loadFromFile</span>(std::ifstream&amp; in) {
+    std::<span class="type">string</span> line;
+    <span class="kw">if</span> (std::getline(in, line)) {
+        std::istringstream ss(line);
+        std::<span class="type">string</span> token;
+        std::getline(ss, token, <span class="str">'|'</span>); id = std::stoi(token);
+        std::getline(ss, name, <span class="str">'|'</span>);
+        std::getline(ss, phone, <span class="str">'|'</span>);
+        std::getline(ss, address, <span class="str">'|'</span>);
+    }
+}</pre></div>
+                <div class="code-block" id="hm-billing-h"><pre><span class="prep">#ifndef</span> BILLING_H
+<span class="prep">#define</span> BILLING_H
+
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;fstream&gt;</span>
+
+<span class="kw">class</span> <span class="type">Billing</span> {
+<span class="kw">private</span>:
+    <span class="type">int</span> billId;
+    std::<span class="type">string</span> customerName;
+    <span class="type">int</span> roomNumber;
+    std::<span class="type">string</span> checkInDate;
+    std::<span class="type">string</span> checkOutDate;
+    <span class="type">int</span> totalNights;
+    <span class="type">double</span> roomCharge;
+    <span class="type">double</span> additionalCharges;
+    <span class="type">double</span> totalAmount;
+
+<span class="kw">public</span>:
+    <span class="func">Billing</span>();
+    <span class="func">Billing</span>(<span class="type">int</span> billId, <span class="kw">const</span> std::<span class="type">string</span>&amp; customerName, <span class="type">int</span> roomNumber,
+            <span class="kw">const</span> std::<span class="type">string</span>&amp; checkInDate, <span class="kw">const</span> std::<span class="type">string</span>&amp; checkOutDate,
+            <span class="type">int</span> totalNights, <span class="type">double</span> pricePerNight, <span class="type">double</span> additionalCharges);
+
+    <span class="type">int</span> <span class="func">getBillId</span>() <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getCustomerName</span>() <span class="kw">const</span>;
+    <span class="type">int</span> <span class="func">getRoomNumber</span>() <span class="kw">const</span>;
+    <span class="type">double</span> <span class="func">getTotalAmount</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">displayInvoice</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">displayBrief</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">loadFromFile</span>(std::ifstream&amp; in);
+};
+
+<span class="prep">#endif</span> <span class="cmt">// BILLING_H</span></pre></div>
+                <div class="code-block" id="hm-billing-cpp"><pre><span class="prep">#include</span> <span class="inc">"Billing.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;sstream&gt;</span>
+
+Billing::<span class="func">Billing</span>()
+    : billId(<span class="num">0</span>), customerName(<span class="str">""</span>), roomNumber(<span class="num">0</span>),
+      checkInDate(<span class="str">""</span>), checkOutDate(<span class="str">""</span>), totalNights(<span class="num">0</span>),
+      roomCharge(<span class="num">0.0</span>), additionalCharges(<span class="num">0.0</span>), totalAmount(<span class="num">0.0</span>) {}
+
+Billing::<span class="func">Billing</span>(<span class="type">int</span> billId, <span class="kw">const</span> std::<span class="type">string</span>&amp; customerName, <span class="type">int</span> roomNumber,
+                 <span class="kw">const</span> std::<span class="type">string</span>&amp; checkInDate, <span class="kw">const</span> std::<span class="type">string</span>&amp; checkOutDate,
+                 <span class="type">int</span> totalNights, <span class="type">double</span> pricePerNight, <span class="type">double</span> additionalCharges)
+    : billId(billId), customerName(customerName), roomNumber(roomNumber),
+      checkInDate(checkInDate), checkOutDate(checkOutDate),
+      totalNights(totalNights),
+      roomCharge(totalNights * pricePerNight),
+      additionalCharges(additionalCharges),
+      totalAmount(totalNights * pricePerNight + additionalCharges) {}
+
+<span class="type">int</span> Billing::<span class="func">getBillId</span>() <span class="kw">const</span> { <span class="kw">return</span> billId; }
+std::<span class="type">string</span> Billing::<span class="func">getCustomerName</span>() <span class="kw">const</span> { <span class="kw">return</span> customerName; }
+<span class="type">int</span> Billing::<span class="func">getRoomNumber</span>() <span class="kw">const</span> { <span class="kw">return</span> roomNumber; }
+<span class="type">double</span> Billing::<span class="func">getTotalAmount</span>() <span class="kw">const</span> { <span class="kw">return</span> totalAmount; }
+
+<span class="type">void</span> Billing::<span class="func">displayInvoice</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+================================================+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|                  HOTEL INVOICE                  |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+================================================+\n"</span>;
+    <span class="cmt">// ... formatted invoice display ...</span>
+}
+
+<span class="type">void</span> Billing::<span class="func">saveToFile</span>(std::ofstream&amp; out) <span class="kw">const</span> {
+    out &lt;&lt; billId &lt;&lt; <span class="str">"|"</span> &lt;&lt; customerName &lt;&lt; <span class="str">"|"</span> &lt;&lt; roomNumber &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; checkInDate &lt;&lt; <span class="str">"|"</span> &lt;&lt; checkOutDate &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; totalNights &lt;&lt; <span class="str">"|"</span> &lt;&lt; roomCharge &lt;&lt; <span class="str">"|"</span>
+        &lt;&lt; additionalCharges &lt;&lt; <span class="str">"|"</span> &lt;&lt; totalAmount &lt;&lt; <span class="str">"\n"</span>;
+}</pre></div>
+                <div class="code-block" id="hm-hotel-h"><pre><span class="prep">#ifndef</span> HOTEL_H
+<span class="prep">#define</span> HOTEL_H
+
+<span class="prep">#include</span> <span class="inc">"Room.h"</span>
+<span class="prep">#include</span> <span class="inc">"Customer.h"</span>
+<span class="prep">#include</span> <span class="inc">"Billing.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;vector&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;string&gt;</span>
+
+<span class="kw">class</span> <span class="type">Hotel</span> {
+<span class="kw">private</span>:
+    std::vector&lt;Room&gt; rooms;
+    std::vector&lt;Customer&gt; customers;
+    std::vector&lt;Billing&gt; bills;
+    <span class="type">int</span> nextCustomerId;
+    <span class="type">int</span> nextBillId;
+
+    <span class="kw">const</span> std::<span class="type">string</span> ROOMS_FILE     = <span class="str">"rooms.txt"</span>;
+    <span class="kw">const</span> std::<span class="type">string</span> CUSTOMERS_FILE = <span class="str">"customers.txt"</span>;
+    <span class="kw">const</span> std::<span class="type">string</span> BILLING_FILE   = <span class="str">"billing.txt"</span>;
+
+    <span class="type">int</span> <span class="func">findRoomIndex</span>(<span class="type">int</span> roomNumber) <span class="kw">const</span>;
+    <span class="type">int</span> <span class="func">findAvailableRoom</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; type) <span class="kw">const</span>;
+    std::<span class="type">string</span> <span class="func">getCurrentDate</span>() <span class="kw">const</span>;
+    <span class="type">int</span> <span class="func">calculateNights</span>(<span class="kw">const</span> std::<span class="type">string</span>&amp; checkIn, <span class="kw">const</span> std::<span class="type">string</span>&amp; checkOut) <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">initializeDefaultRooms</span>();
+
+<span class="kw">public</span>:
+    <span class="func">Hotel</span>();
+    <span class="type">void</span> <span class="func">loadData</span>();
+    <span class="type">void</span> <span class="func">saveData</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">displayAvailableRooms</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">searchRoom</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">checkIn</span>();
+    <span class="type">void</span> <span class="func">checkOut</span>();
+    <span class="type">void</span> <span class="func">displayGuestDetails</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">viewAllCustomers</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">generateBill</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">viewBillingHistory</span>() <span class="kw">const</span>;
+
+    <span class="type">void</span> <span class="func">showMenu</span>() <span class="kw">const</span>;
+    <span class="type">void</span> <span class="func">run</span>();
+};
+
+<span class="prep">#endif</span> <span class="cmt">// HOTEL_H</span></pre></div>
+                <div class="code-block" id="hm-hotel-cpp"><pre><span class="prep">#include</span> <span class="inc">"Hotel.h"</span>
+<span class="prep">#include</span> <span class="inc">&lt;iostream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;iomanip&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;fstream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;sstream&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;ctime&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;algorithm&gt;</span>
+<span class="prep">#include</span> <span class="inc">&lt;limits&gt;</span>
+
+Hotel::<span class="func">Hotel</span>() : nextCustomerId(<span class="num">1</span>), nextBillId(<span class="num">1</span>) {}
+
+<span class="cmt">// ── Initialize 30 default rooms ──────────────────────────────</span>
+
+<span class="type">void</span> Hotel::<span class="func">initializeDefaultRooms</span>() {
+    rooms.clear();
+    <span class="cmt">// Rooms 101-110 : Single ($50)</span>
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; ++i)
+        rooms.emplace_back(<span class="num">100</span> + i, <span class="str">"Single"</span>, <span class="num">50.0</span>);
+    <span class="cmt">// Rooms 201-210 : Double ($80)</span>
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; ++i)
+        rooms.emplace_back(<span class="num">200</span> + i, <span class="str">"Double"</span>, <span class="num">80.0</span>);
+    <span class="cmt">// Rooms 301-310 : Suite ($150)</span>
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; ++i)
+        rooms.emplace_back(<span class="num">300</span> + i, <span class="str">"Suite"</span>, <span class="num">150.0</span>);
+}
+
+<span class="cmt">// ── Check-In ─────────────────────────────────────────────────</span>
+
+<span class="type">void</span> Hotel::<span class="func">checkIn</span>() {
+    std::cout &lt;&lt; <span class="str">"\n+========================================+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|             GUEST CHECK-IN             |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+========================================+\n\n"</span>;
+    <span class="cmt">// Get guest info, select room type, assign room</span>
+    <span class="cmt">// ... (see full source code) ...</span>
+}
+
+<span class="cmt">// ── Check-Out ────────────────────────────────────────────────</span>
+
+<span class="type">void</span> Hotel::<span class="func">checkOut</span>() {
+    <span class="cmt">// Calculate nights, additional charges, generate invoice</span>
+    <span class="cmt">// ... (see full source code) ...</span>
+}
+
+<span class="cmt">// ── Menu &amp; Main Loop ─────────────────────────────────────────</span>
+
+<span class="type">void</span> Hotel::<span class="func">showMenu</span>() <span class="kw">const</span> {
+    std::cout &lt;&lt; <span class="str">"\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+========================================+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|      HOTEL MANAGEMENT SYSTEM           |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+========================================+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  1. Display Available Rooms             |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  2. Search Room by Number               |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  3. Check-In Guest                      |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  4. Check-Out Guest                     |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  5. Display Guest Details                |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  6. View All Customers                  |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  7. Generate Bill / Invoice              |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  8. View Billing History                 |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"|  9. Save &amp; Exit                          |\n"</span>;
+    std::cout &lt;&lt; <span class="str">"+========================================+\n"</span>;
+    std::cout &lt;&lt; <span class="str">"  Enter your choice (1-9): "</span>;
+}
+
+<span class="type">void</span> Hotel::<span class="func">run</span>() {
+    loadData();
+    <span class="type">bool</span> running = <span class="kw">true</span>;
+    <span class="kw">while</span> (running) {
+        showMenu();
+        <span class="type">int</span> choice;
+        std::cin &gt;&gt; choice;
+        <span class="kw">switch</span> (choice) {
+            <span class="kw">case</span> <span class="num">1</span>: displayAvailableRooms();  <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">2</span>: searchRoom();             <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">3</span>: checkIn();                <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">4</span>: checkOut();               <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">5</span>: displayGuestDetails();    <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">6</span>: viewAllCustomers();       <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">7</span>: generateBill();           <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">8</span>: viewBillingHistory();     <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">9</span>: saveData(); running = <span class="kw">false</span>; <span class="kw">break</span>;
+            <span class="kw">default</span>: std::cout &lt;&lt; <span class="str">"  [!] Invalid choice.\n"</span>;
+        }
+    }
+}</pre></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item"><span class="check">✓</span> 30 rooms (3 types)</div>
+                <div class="feature-item"><span class="check">✓</span> Guest check-in/out</div>
+                <div class="feature-item"><span class="check">✓</span> Invoice generation</div>
+                <div class="feature-item"><span class="check">✓</span> Billing history</div>
+                <div class="feature-item"><span class="check">✓</span> File persistence</div>
+                <div class="feature-item"><span class="check">✓</span> Date calculations</div>
+                <div class="feature-item"><span class="check">✓</span> Multi-class OOP</div>
+                <div class="feature-item"><span class="check">✓</span> Customer records</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Footer ═══════════════════════════════════════════ -->
+    <footer class="footer">
+        <p>C++ Projects Portfolio &mdash; Built with ❤️</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">5 Projects &bull; 15 Source Files &bull; 1200+ Lines of C++ Code</p>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#home" class="back-to-top" id="backToTop">↑</a>
+
+    <!-- ═══ JavaScript ═══════════════════════════════════════ -->
+    <script>
+        // ── Tab switching ──────────────────────────────────
+        function showTab(btn, id) {
+            const container = btn.closest('.project-card');
+            // Deactivate all tabs
+            container.querySelectorAll('.file-tab').forEach(t => t.classList.remove('active'));
+            container.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
+            // Activate selected
+            btn.classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+
+        // ── Copy code ──────────────────────────────────────
+        function copyCode(id) {
+            const block = document.getElementById(id);
+            const text = block.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = block.closest('.code-container').querySelector('.copy-btn');
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = '📋 Copy', 2000);
+            });
+        }
+
+        function copyActiveCode(btn) {
+            const container = btn.closest('.code-container');
+            const active = container.querySelector('.code-block.active');
+            if (active) {
+                navigator.clipboard.writeText(active.innerText).then(() => {
+                    btn.textContent = '✅ Copied!';
+                    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+                });
+            }
+        }
+
+        // ── Back to top button ─────────────────────────────
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // ── Active navbar link ─────────────────────────────
+        const sections = document.querySelectorAll('section[id], .hero[id]');
+        const navLinks = document.querySelectorAll('.navbar-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                if (window.scrollY >= top) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ── Close mobile menu on link click ────────────────
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.navbar-links').classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
